@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate {
    
     
 
@@ -27,6 +27,23 @@ class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDa
     ]
     // var imageData = ["name","call","gmail","OrderId","address","Date","Description","Barcoad"]
      let datePicker = UIDatePicker()
+    var selectedCountry :  String?
+    var countryList = ["+91","92","93","+94","+95","+96","97"]
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return countryList.count
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return countryList[row]
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedCountry = countryList[row]
+          let cell = deliveryTableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! DeliveryViewCell
+       cell.cellTextField.text = selectedCountry
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
  deliveryTableView.rowHeight = 75
@@ -44,6 +61,23 @@ class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDa
         {
             cell.cellTextField.placeholder = "Image"
 return cell        }
+            else if(indexPath.row == 1)
+        {
+             let cell = deliveryTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DeliveryViewCell
+            let pickerView = UIPickerView()
+            pickerView.delegate = self
+            //textFieldDelegate.leftView = pickerView
+          cell.cellTextField.inputView = pickerView
+            let toolbar = UIToolbar()
+            toolbar.sizeToFit()
+            let button = UIBarButtonItem(title: "done", style: .plain, target: self, action: #selector(self.action))
+            toolbar.setItems([button], animated: true)
+            toolbar.isUserInteractionEnabled = true
+           cell.cellTextField.inputAccessoryView = toolbar
+            cell.cellTextField.placeholder = deliveryData[1]
+            cell.cellImageView.image = imageData[1]
+            return cell
+        }
             else if(indexPath.row == 5)
         {
              let cell = deliveryTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DeliveryViewCell
@@ -73,6 +107,10 @@ return cell        }
         print(cell.cellTextField.text!)
         self.view.endEditing(true)
         
+    }
+    @objc func action()
+    {
+        view.endEditing(true)
     }
     
     
