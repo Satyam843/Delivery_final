@@ -62,6 +62,7 @@ class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDa
         {
             cell.cellTextField.placeholder = "Image"
     cell.button.isHidden = true
+            cell.cellImageView.image = UIImage(named: "plusicon")
 return cell        }
             else if(indexPath.row == 1)
         {
