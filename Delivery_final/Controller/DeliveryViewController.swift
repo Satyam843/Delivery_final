@@ -12,6 +12,7 @@ class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDa
    //IB Outlets
     @IBOutlet weak var deliveryTableView: UITableView!
     //Variables
+   
     var deliveryData = ["Client Name","Phone","Email","order Id","Address","Deliver Before","Description","Barcode"]
     var imageData = [UIImage(named: "name"),
                      UIImage(named: "call"),
@@ -60,6 +61,7 @@ class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if(indexPath.row == 8)
         {
             cell.cellTextField.placeholder = "Image"
+    cell.button.isHidden = true
 return cell        }
             else if(indexPath.row == 1)
         {
@@ -76,6 +78,18 @@ return cell        }
            cell.cellTextField.inputAccessoryView = toolbar
             cell.cellTextField.placeholder = deliveryData[1]
             cell.cellImageView.image = imageData[1]
+              cell.button.isHidden = true
+            return cell
+        }
+            else if(indexPath.row == 4)
+        {
+           let cell = deliveryTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DeliveryViewCell
+           
+         
+            cell.celldelegate=self
+            cell.index=indexPath
+            cell.cellTextField.placeholder = deliveryData[4]
+            cell.cellImageView.image = imageData[4]
             return cell
         }
             else if(indexPath.row == 5)
@@ -89,6 +103,7 @@ return cell        }
             //cell.cellTextField.text = "\(datePicker.date)"
             cell.cellTextField.placeholder = deliveryData[5]
             cell.cellImageView.image = imageData[5]
+              cell.button.isHidden = true
             toolBar.setItems([doneBtn], animated: true)
            return cell
         }
@@ -96,6 +111,7 @@ return cell        }
         {
             cell.cellTextField.placeholder = deliveryData[indexPath.row]
             cell.cellImageView.image = imageData[indexPath.row]
+              cell.button.isHidden = true
             return cell
         }
        
@@ -132,4 +148,14 @@ return cell        }
     }
     */
 
+}
+extension  DeliveryViewController : Delivery
+{
+    
+    func OnClick(index: Int) {
+        let alert = UIAlertController(title: "hello", message: "Click here to edit", preferredStyle:.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: .none))
+        present(alert, animated: true, completion: .none)
+    }
+    
 }
