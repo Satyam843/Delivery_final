@@ -9,12 +9,10 @@
 import UIKit
 
 class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate {
-   
-    
-
+   //IB Outlets
     @IBOutlet weak var deliveryTableView: UITableView!
+    //Variables
     var deliveryData = ["Client Name","Phone","Email","order Id","Address","Deliver Before","Description","Barcode"]
-   
     var imageData = [UIImage(named: "name"),
                      UIImage(named: "call"),
                      UIImage(named: "gmail"),
@@ -25,25 +23,13 @@ class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDa
                      UIImage(named: "BarCoad")
         
     ]
-    // var imageData = ["name","call","gmail","OrderId","address","Date","Description","Barcoad"]
-     let datePicker = UIDatePicker()
     var selectedCountry :  String?
     var countryList = ["+91","92","93","+94","+95","+96","97"]
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return countryList.count
-    }
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return countryList[row]
-    }
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedCountry = countryList[row]
-          let cell = deliveryTableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! DeliveryViewCell
-       cell.cellTextField.text = selectedCountry
-    }
+    // var imageData = ["name","call","gmail","OrderId","address","Date","Description","Barcoad"]
+    //Constants
+     let datePicker = UIDatePicker()
+   
+   //View life cycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
  deliveryTableView.rowHeight = 75
@@ -51,10 +37,24 @@ class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDa
         donePressed()
         // Do any additional setup after loading the view.
     }
+      //private Functions
+    //Objectice c functions
+    @objc func donePressed() {
+        let cell = deliveryTableView.cellForRow(at: IndexPath(row: 5, section: 0)) as! DeliveryViewCell
+        cell.cellTextField.text = "\(datePicker.date)"
+        print(cell.cellTextField.text!)
+        self.view.endEditing(true)
+        
+    }
+    @objc func action()
+    {
+        view.endEditing(true)
+    }
+ 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return deliveryData.count+1
     }
-    
+    ////Tableview methods(stubs)
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = deliveryTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DeliveryViewCell
         if(indexPath.row == 8)
@@ -101,17 +101,24 @@ return cell        }
        
         
     }
-    @objc func donePressed() {
-        let cell = deliveryTableView.cellForRow(at: IndexPath(row: 5, section: 0)) as! DeliveryViewCell
-        cell.cellTextField.text = "\(datePicker.date)"
-        print(cell.cellTextField.text!)
-        self.view.endEditing(true)
-        
+    //Pickerview methods(stubs)
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
     }
-    @objc func action()
-    {
-        view.endEditing(true)
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return countryList.count
     }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return countryList[row]
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedCountry = countryList[row]
+        let cell = deliveryTableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! DeliveryViewCell
+        cell.cellTextField.text = selectedCountry
+    }
+    
+    
     
     
 
