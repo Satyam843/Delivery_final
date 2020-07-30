@@ -22,7 +22,7 @@ class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDa
                      UIImage(named: "address"),
                      UIImage(named: "Date"),
                      UIImage(named: "Description"),
-                     UIImage(named: "Barcoad")
+                     UIImage(named: "BarCoad")
         
     ]
     // var imageData = ["name","call","gmail","OrderId","address","Date","Description","Barcoad"]
