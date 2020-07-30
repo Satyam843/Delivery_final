@@ -16,8 +16,8 @@ class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var deliveryData = ["Client Name","Phone","Email","order Id","Address","Deliver Before","Description","Barcode"]
     var imageData = [UIImage(named: "name"),
                      UIImage(named: "call"),
-                     UIImage(named: "gmail"),
-                     UIImage(named: "OrderId"),
+                     UIImage(named: "gmailcropped"),
+                     UIImage(named: "OrderId-1"),
                      UIImage(named: "address"),
                      UIImage(named: "Date"),
                      UIImage(named: "Description"),
