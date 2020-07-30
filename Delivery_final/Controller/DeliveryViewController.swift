@@ -14,7 +14,7 @@ class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
     @IBOutlet weak var deliveryTableView: UITableView!
     var deliveryData = ["Client Name","Phone","Email","order Id","Address","Deliver Before","Description","Barcode"]
-    private var datePicker : UIDatePicker?
+   
     var imageData = [UIImage(named: "name"),
                      UIImage(named: "call"),
                      UIImage(named: "gmail"),
@@ -26,10 +26,12 @@ class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     ]
     // var imageData = ["name","call","gmail","OrderId","address","Date","Description","Barcoad"]
-    
+     let datePicker = UIDatePicker()
     override func viewDidLoad() {
         super.viewDidLoad()
  deliveryTableView.rowHeight = 75
+        deliveryTableView.reloadData()
+        donePressed()
         // Do any additional setup after loading the view.
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -41,16 +43,38 @@ class DeliveryViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if(indexPath.row == 8)
         {
             cell.cellTextField.placeholder = "Image"
+return cell        }
+            else if(indexPath.row == 5)
+        {
+             let cell = deliveryTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DeliveryViewCell
+            let toolBar = UIToolbar()
+            toolBar.sizeToFit()
+            let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
+            cell.cellTextField.inputAccessoryView = toolBar
+            cell.cellTextField.inputView = datePicker
+            //cell.cellTextField.text = "\(datePicker.date)"
+            cell.cellTextField.placeholder = deliveryData[5]
+            cell.cellImageView.image = imageData[5]
+            toolBar.setItems([doneBtn], animated: true)
+           return cell
         }
-            
         else
         {
             cell.cellTextField.placeholder = deliveryData[indexPath.row]
             cell.cellImageView.image = imageData[indexPath.row]
+            return cell
         }
-        return cell
+       
         
     }
+    @objc func donePressed() {
+        let cell = deliveryTableView.cellForRow(at: IndexPath(row: 5, section: 0)) as! DeliveryViewCell
+        cell.cellTextField.text = "\(datePicker.date)"
+        print(cell.cellTextField.text!)
+        self.view.endEditing(true)
+        
+    }
+    
     
 
     /*
